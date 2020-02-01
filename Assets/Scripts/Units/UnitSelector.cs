@@ -27,7 +27,7 @@ public class UnitSelector : MonoBehaviour
 	private bool m_isSelecting;		//< Indicates if the user is currently selecting 
 	private Vector2 m_mouseStartPosition;   //< The current selection start position for the current selection
 
-	private List<Unit> m_selectedUnits;
+	private List<Unit> m_selectedUnits = new List<Unit>();
 
     void Start()
     {
@@ -56,6 +56,12 @@ public class UnitSelector : MonoBehaviour
 				// Check it is a unit
 				if (hitInfo.collider.GetComponent<Unit>() != null)
 				{
+					//
+					// We reset the selection
+					ResetSelection();
+
+					//
+					// Select this unit
 					hitInfo.collider.GetComponent<Unit>().SetSelected(true);
 					m_selectedUnits.Add(hitInfo.collider.GetComponent<Unit>());
 				}
@@ -77,6 +83,10 @@ public class UnitSelector : MonoBehaviour
 					//
 					// Store the mouse position
 					m_mouseStartPosition = Input.mousePosition;
+
+					//
+					// We start the selection, so we clear the array of selected units
+					ResetSelection();
 				}
 
 				//
@@ -143,15 +153,21 @@ public class UnitSelector : MonoBehaviour
 			bounds.SetMinMax(min, max);
 
 			//
-			//
+			// Iterate over the units
 			foreach (var item in UnitsManager.m_instance.GetUnits())
 			{
 				//
-				//
+				// We check if the bound contains the current item 
 				if (bounds.Contains(Camera.main.WorldToViewportPoint(item.transform.position)))
 				{
 					//
-					Debug.Log("Select : " + item.transform.name);
+					// The current item is selected, add it in the array
+					m_selectedUnits.Add(item as Unit);
+					item.SetSelected(true);
+				}
+				else
+				{
+					m_selectedUnits.Remove(item as Unit);
 				}
 			}
 

@@ -11,8 +11,7 @@ using UnityEngine;
 
 public class UnitsManager : MonoBehaviour
 {
-	public List<Unit> m_units;
-	private List<Unit> m_selectedUnits;
+	public List<Unit> m_units = new List<Unit>();
 
 	public static UnitsManager m_instance;
 

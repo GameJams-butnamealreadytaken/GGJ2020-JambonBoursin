@@ -14,7 +14,7 @@ public class FireGenerator : MonoBehaviour
     void Start()
     {
         int remaining = FireNumber;
-        while (remaining != 0)
+        for (int i = 0; i < 50; ++i)
         {
             NavMeshHit originHit;
             NavMesh.SamplePosition(gameObject.transform.position, out originHit, 3.0f, NavMesh.AllAreas);
@@ -33,12 +33,13 @@ public class FireGenerator : MonoBehaviour
                 {
                     if (path.status == NavMeshPathStatus.PathComplete)
                     {
-                        for (int i = 0; i < path.corners.Length - 1; ++i)
+                        for (int j = 0; j < path.corners.Length - 1; ++j)
                         {
-                            Debug.DrawLine(path.corners[i], path.corners[i + 1], Color.white, 500.0f);
+                            Debug.DrawLine(path.corners[j], path.corners[j + 1], Color.white, 500.0f);
                         }
                         Instantiate(FireFX, finalPosition, Quaternion.identity);
-                        remaining--;
+                        if (--remaining == 0)
+                            break;
                     }
                 }
             }

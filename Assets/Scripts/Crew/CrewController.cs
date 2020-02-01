@@ -7,7 +7,7 @@ namespace Crew
 {
     public class CrewController : MonoBehaviour
     {
-        [Tooltip("[Debug]If true the crew member can be directly moved by mouse click")]
+        [Tooltip("[Debug] If true the crew member can be directly moved by mouse click")]
         public bool m_autoAttachToWorldClicker;
 
         private NavMeshAgent    m_navMeshAgent;
